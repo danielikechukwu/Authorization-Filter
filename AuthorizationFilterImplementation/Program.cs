@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -17,6 +18,9 @@ builder.Services.AddControllers()
     {
         // Disable camelCase in JSON output, preserve property names as defined in C# classes
         options.JsonSerializerOptions.PropertyNamingPolicy = null; // Keep property names as defined in C# models
+
+        //Apply authorize filter globally
+        // options.Filters.Add(new AuthorizeFilter());
     });
 
 // Register Authentication with JWT Bearer scheme
