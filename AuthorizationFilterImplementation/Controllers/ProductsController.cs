@@ -36,8 +36,13 @@ namespace AuthorizationFilterImplementation.Controllers
 
         // Multiple Roles - AND Logic (User must have both Manager and Admin)
         [HttpGet("manager-and-admin")]
-        [Authorize(Roles = "Admin")] // User must have BOTH Admin AND Manager roles
-        [Authorize(Roles = "Manager")]
+
+        //--- Authorization ----
+        [Authorize(Policy = "AdminAndManager")]
+
+        //OR
+        //[Authorize(Roles = "Admin")] // User must have BOTH Admin AND Manager roles
+        //[Authorize(Roles = "Manager")]
         public IActionResult ManagerAndAdmin()
         {
             var userName = User.Identity?.Name ?? "Unknown";
@@ -46,7 +51,11 @@ namespace AuthorizationFilterImplementation.Controllers
 
         // Multiple Roles - OR Logic (User must have Manager OR User)
         [HttpGet("manager-or-user")]
-        [Authorize(Roles = "Manager,User")] // User must have EITHER Manager OR User role
+
+        [Authorize(Policy = "ManagerOrUser")]
+
+        //OR
+        //[Authorize(Roles = "Manager,User")] // User must have EITHER Manager OR User role
         public IActionResult ManagerOrUser()
         {
             var userName = User.Identity?.Name ?? "Unknown";

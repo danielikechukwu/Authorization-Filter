@@ -59,10 +59,14 @@ builder.Services.AddAuthentication(options =>
 // Define a policy that requires authenticated users
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("AdminAndManager", policy =>
-        policy.RequireRole("Admin")    // must have Admin
-              .RequireRole("Manager")  // AND must also have Manager
-    );
+    //AND GATE
+    options.AddPolicy("AdminAndManager", policy => policy.RequireRole("Admin").RequireRole("Manager")); // MUST have Admin AND Manager roles
+
+    //OR GATE
+    options.AddPolicy("AdminOrManager", policy => policy.RequireRole("Admin", "Manager")); // MUST have EITHER Admin OR Manager role
+
+    //OR GATE
+    options.AddPolicy("ManagerOrUser", policy => policy.RequireRole("User", "Manager")); // MUST have EITHER Admin OR Manager role
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
